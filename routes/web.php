@@ -11,6 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Route::get('/','PagesController@index');
+Route::get('/main','PagesController@main');
+
+Route::get('/test','HomeController@test');
+
+Route::get('/about', function () {
+    return view('about');
 });
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::resource('photos', 'PhotoController');
