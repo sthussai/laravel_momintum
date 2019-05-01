@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Photo;
 class PhotoController extends Controller
 {
     /**
@@ -14,6 +14,9 @@ class PhotoController extends Controller
     public function index()
     {
         //
+        $photos = Photo::all();
+
+        return view('photos.index', ['photos'=>$photos]);
     }
 
     /**
@@ -24,6 +27,7 @@ class PhotoController extends Controller
     public function create()
     {
         //
+        return view('photos.create');
     }
 
     /**
@@ -34,7 +38,18 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //   
+
+        $photo = new Photo();
+
+        $photo->name = request()->name;
+        $photo->description = request()->description;
+        $photo->url = request()->url;
+
+        $photo->save();
+        
+        return redirect('/photos');
+
     }
 
     /**
@@ -46,6 +61,14 @@ class PhotoController extends Controller
     public function show($id)
     {
         //
+        $photo = Photo::find($id);
+        
+        $nextID = Photo::where('id', '>', $photo->id)->min('id');
+        $previousID = Photo::where('id', '<', $photo->id)->max('id');
+       //if($nextID)
+        //return $nextID;
+        return view('photos.show', ['photo'=>$photo,'nextID'=>$nextID, 'previousID'=>$previousID]);
+
     }
 
     /**
@@ -56,7 +79,9 @@ class PhotoController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $photo = Photo::find($id);
+        return view('photos.edit',['photo'=>$photo]);
     }
 
     /**
@@ -68,7 +93,17 @@ class PhotoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd(request()->all());
+        
+        $photo = Photo::find($id);
+
+        $photo->name = $request->name;
+        $photo->description = $request->description;
+        $photo->url = $request->url;
+        
+        $photo->save();
+
+        return redirect('/photos');
     }
 
     /**
@@ -79,6 +114,11 @@ class PhotoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd(request()->all());
+        
+        $photo = Photo::find($id)->delete();
+
+        return redirect('/photos');
+
     }
 }

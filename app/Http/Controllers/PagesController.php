@@ -23,7 +23,7 @@ class PagesController extends Controller
         return view('momintum.mhome', ['users'=> $users]);
     }
 
-    public function main()
+    public function mmain()
     {   
         return view('momintum.mmain');
     }

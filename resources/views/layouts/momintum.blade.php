@@ -43,106 +43,103 @@
 
 <!-- Login/Register -->
 
-<div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
 
-                    </ul>
+<!-- Navbar -->
+        
+<div class='w3-bar w3-theme-d2'>
+    
+        <div class="w3-content w3-left-align w3-large">
+            
+              
+              <a href="{{ url('/') }}" class="w3-bar-item w3-button w3-padding-large "><i class="fa fa-home w3-margin-right"></i>{{ config('app.name', 'Laravel') }}</a>
+              @guest
+                <a href="{{ route('login') }}" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i>{{ __('Login') }}</a>
+                                              
+                      @if (Route::has('register'))
+                          
+                      <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-right w3-hover-white" href="{{ route('register') }}">{{ __('Register') }}</a>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                      @endif
+              @else
+                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
+                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                  <div class="w3-dropdown-hover w3-bar-item w3-button w3-hide-small w3-right">{{Auth::user()->name }}
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle" style="height:43px;width:43px" alt="Avatar">
+                      <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+                        <a href="#" class="w3-bar-item w3-button">One new friend request</a>
+                        <a href="{{ route('logout') }}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout {{ Auth::user()->name }}</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>  
+                      </div>
+                  </div>
+
+               @endguest
+          
+          </div>
+      
+ </div>
+
 
 
 
 
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style=""> 
-  <div class="w3-container">
-      <!-- Header -->
-  <header id="portfolio">
-    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-<div class="w3-container w3-margin-top">
-    <h1><b>@yield('dashboardTitle', 'Welcome')</b></h1>
+
+  
+   
+    <div class="w3-bar w3-padding w3-margin-top">
+        <h1><b>@yield('dashboardTitle', 'Welcome ')</b></h1>
+        
+          <!--Logged In Nav Bar -->
+          <a href="/mprofile" class="w3-bar-item w3-right w3-large w3-button w3-hide-small" title="News">Profile</a><span class="w3-bar-item w3-right">/</span>
+          <a href="#" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="News">Exams</a> <span class="w3-bar-item w3-right">/</span>
+          <a href="#" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="Account Settings">Reporting</i></a><span class="w3-bar-item w3-right">/</span>
+          <a href="#" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="Messages">Events</a>
     </div>
-  </header>
-<!--Dashboard section -->
- <div class="w3-row-padding w3-margin-bottom">
-    <a href="/test" class="w3-third ">
-      <div class="w3-container w3-red w3-btn w3-bar w3-padding-16">
-        <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>03</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Run Test</h4>
-      </div>
-    </a>
-    <a href="/" class=" w3-third">
-      <div class="w3-container w3-blue w3-btn w3-bar w3-padding-16">
-        <div class="w3-left"><i class="fa fa-home w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>02</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Home</h4>
-      </div>
-    </a>
-    <a href="/main" class="  w3-third">
-      <div class="w3-container w3-orange w3-btn w3-bar w3-text-white w3-padding-16">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>50%</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Main</h4>
-      </div>
-      </a>
-</div>    
+
+    <!--Dashboard section -->
+    <div class="w3-row-padding w3-margin-bottom">
+        <a href="/test" class="w3-third ">
+          <div class="w3-container w3-red w3-btn w3-bar w3-padding-16">
+            <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+            <div class="w3-right">
+              <h3>03</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Run Test</h4>
+          </div>
+        </a>
+        <a href="/" class=" w3-third">
+          <div class="w3-container w3-blue w3-btn w3-bar w3-padding-16">
+            <div class="w3-left"><i class="fa fa-home w3-xxxlarge"></i></div>
+            <div class="w3-right">
+              <h3>02</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Home</h4>
+          </div>
+        </a>
+        <a href="/mmain" class="  w3-third">
+          <div class="w3-container w3-orange w3-btn w3-bar w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+            <div class="w3-right">
+              <h3>50%</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Main</h4>
+          </div>
+          </a>
+    </div>    
 
 
 @yield('content')
+
+<!-- Footer -->
+<footer class="w3-container w3-theme-d3 w3-padding-16">
+  <h5>Footer</h5>
+</footer>
