@@ -1,4 +1,4 @@
-@extends('photos.layout')
+@extends("layouts.momintum")
 
 @section('content')
 
@@ -7,6 +7,13 @@
                             {{ session('status') }}
                         </div>
                     @endif -->
+                    <div class="w3-center    w3-panel w3-card">
+                <div class="links w3-center w3-large w3-bar w3-padding-large">
+                    <a class="w3-btn" href="/photos">Home</a>           
+                    <a class="w3-btn " href="/photos/create">Create New Photo</a>
+
+                </div>
+</div>                
 
 <h3 class='w3-center'>Edit Photo</h3>
 

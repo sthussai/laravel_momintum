@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\User;
 use App\Flight;
+use App\Event;
+use App\EventRegister;  
 class HomeController extends Controller
 {
     /**
@@ -13,9 +16,14 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('musers');
     }
-
+    //auth()->id()
+    //auth()->user()
+    //auth()->check()
+        //auth()->guest()
+    
+    
     /**
      * Show the application dashboard.
      *
@@ -26,15 +34,22 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function mprofile(Request $request)
+    public function musers()
     {   
-        //return(Auth::user());
-        //return view('momintum.mprofile');
-        //return(session()->all());
-        if ($request->session()->exists('users')) {
-            return('true');
-            //
-        }else{return'false';}
+       $users = User::paginate(5);
+     
+        return view('momintum.musers', ['users'=> $users]);
+    }
+
+    public function mprofile()
+    {    $events = Event::paginate(4);
+
+        $eventregisters = EventRegister::where('owner_id', auth()->id())->get();
+                
+        
+        return view('momintum.mprofile', ['events'=> $events, 'eventregisters'=>$eventregisters]);
+        
+        
         
     }
 

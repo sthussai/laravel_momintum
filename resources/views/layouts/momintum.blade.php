@@ -14,13 +14,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<link href="{{ asset('css/wheelmenu.css') }}" rel="stylesheet">
 
  <!-- Scripts -->
  <script src="{{ asset('js/app.js') }}" defer></script>
 
 <style>
     
-
+    a {
+    text-decoration: none !important;
+}
 .detailrow {
   display: flex; /* equal height of the childrenkn knk */
 }
@@ -53,6 +56,10 @@
             
               
               <a href="{{ url('/') }}" class="w3-bar-item w3-button w3-padding-large "><i class="fa fa-home w3-margin-right"></i>{{ config('app.name', 'Laravel') }}</a>
+              <a href="{{ url('/photos') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Photos"><i class="fa fa-photo"></i></a>
+              <a href="{{ url('/events') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Events"><i class="fa fa-star"></i></a>
+              <a href="{{ url('/musers') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Users"><i class="fa fa-user"></i></a>
+              <a href="{{ url('/test') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Run Test"><i class="fa fa-check"></i></a>
               @guest
                 <a href="{{ route('login') }}" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i>{{ __('Login') }}</a>
                                               
@@ -62,9 +69,6 @@
 
                       @endif
               @else
-                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
-                <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
 
 
                   <div class="w3-dropdown-hover w3-bar-item w3-button w3-hide-small w3-right">{{Auth::user()->name }}
@@ -93,51 +97,20 @@
   
    
     <div class="w3-bar w3-padding w3-margin-top">
-        <h1><b>@yield('dashboardTitle', 'Welcome ')</b></h1>
-        
+        <h1><b>@yield('dashboardTitle', 'Welcome ')
+        @auth {{Auth::user()->name}} @endauth
+        </b></h1>
+        @auth
           <!--Logged In Nav Bar -->
           <a href="/mprofile" class="w3-bar-item w3-right w3-large w3-button w3-hide-small" title="News">Profile</a><span class="w3-bar-item w3-right">/</span>
           <a href="#" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="News">Exams</a> <span class="w3-bar-item w3-right">/</span>
           <a href="#" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="Account Settings">Reporting</i></a><span class="w3-bar-item w3-right">/</span>
-          <a href="#" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="Messages">Events</a>
+          <a href="/mevent" class="w3-bar-item w3-right w3-button w3-large w3-hide-small" title="Messages">Events</a>
+        @endauth
     </div>
 
-    <!--Dashboard section -->
-    <div class="w3-row-padding w3-margin-bottom">
-        <a href="/test" class="w3-third ">
-          <div class="w3-container w3-red w3-btn w3-bar w3-padding-16">
-            <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
-            <div class="w3-right">
-              <h3>03</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Run Test</h4>
-          </div>
-        </a>
-        <a href="/" class=" w3-third">
-          <div class="w3-container w3-blue w3-btn w3-bar w3-padding-16">
-            <div class="w3-left"><i class="fa fa-home w3-xxxlarge"></i></div>
-            <div class="w3-right">
-              <h3>02</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Home</h4>
-          </div>
-        </a>
-        <a href="/mmain" class="  w3-third">
-          <div class="w3-container w3-orange w3-btn w3-bar w3-text-white w3-padding-16">
-            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-            <div class="w3-right">
-              <h3>50%</h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4>Main</h4>
-          </div>
-          </a>
-    </div>    
 
-
-@yield('content')
+    @yield('content')
 
 <!-- Footer -->
 <footer class="w3-container w3-theme-d3 w3-padding-16">

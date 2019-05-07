@@ -16,12 +16,7 @@ class PagesController extends Controller
 {
     //
 
-    public function index()
-    {   
-       $users = User::paginate(5);
-       //$users = Flight::all();
-        return view('momintum.mhome', ['users'=> $users]);
-    }
+
 
     public function mmain()
     {   

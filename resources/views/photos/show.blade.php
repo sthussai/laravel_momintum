@@ -1,10 +1,18 @@
-@extends('photos.layout')
+@extends("layouts.momintum")
 
 
 @section('content')
 
-<div>
-	<div>
+<div class="w3-center    w3-panel w3-card">
+                <div class="links w3-center w3-large w3-bar w3-padding-large">
+                    <a class="w3-btn" href="/photos">Home</a>           
+                    <a class="w3-btn " href="/photos/create">Create New Photo</a>
+
+                </div>
+</div>                
+
+<div class='w3-center w3-content'>
+	<div >
 <h1>Show Photo
 </h1></div>
 
@@ -31,8 +39,9 @@
 <figure >
   <img class="w3-image" src="{{$photo->url}}">
 </figure>
-<a  href="/photos/{{$previousID}}" class="w3-button w3-blue-grey">Previous</a>
+<a  href="/photos/{{$previousID}}" class="w3-button    w3-blue-grey">Previous</a>
 <a  href="/photos/{{$photo->id}}/edit" class="w3-button w3-green">Edit</a>
 <a  href="/photos/{{$nextID}}" class="w3-button w3-blue-grey">Next</a>
 <div class='w3-margin-top'><a  href="/photos" class="w3-button w3-light-grey">Home</a></div>
+</div>  
 @endsection

@@ -13,15 +13,17 @@
 
 
 
-Route::get('/','PagesController@index');
+Route::get('/','PagesController@mmain');
 Route::get('/mmain','PagesController@mmain');
 Route::get('/mprofile', 'HomeController@mprofile');
-
+Route::get('/musers', 'HomeController@musers');
 
 Route::get('/test','HomeController@test');
 
-Route::get('/about', function () {
-    return view('about');
+
+
+Route::get('/mevent', function () {
+    return view('momintum.mevent');
 });
 
 Route::get('/contact', function () {
@@ -36,3 +38,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::resource('photos', 'PhotoController');
+Route::resource('events', 'EventsController');
+Route::resource('eventregister', 'EventRegisterController');

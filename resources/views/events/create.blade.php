@@ -1,20 +1,21 @@
-@extends("layouts.momintum")
+@extends('layouts.momintum')
+
 @section('title','Create')
 
 @section('content')
+
 <div class="w3-center    w3-panel w3-card">
                 <div class="links w3-center w3-large w3-bar w3-padding-large">
-                    <a class="w3-btn" href="/photos">Home</a>           
-                    <a class="w3-btn " href="/photos/create">Create New Photo</a>
+                    <a class="w3-btn" href="/events">Home</a>           
+                    <a class="w3-btn " href="/events/create">Create New Event</a>
 
                 </div>
-</div>                
 
 
-<form action="/photos" method='POST' class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+<form action="/events" method='POST' class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
 {{ csrf_field() }}
 
-<h2 class="w3-center w3-padding-large"> Create New Photo</h2>
+<h2 class="w3-center"> Create New Event</h2>
  
 <div class="w3-row w3-section">
   <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
@@ -43,4 +44,5 @@
 </p>
 </form>
 
+</div>
 @endsection
