@@ -21,8 +21,18 @@ class EventRegisterController extends Controller
     public function index()
     {
         //
-        //$eventregisters = EventRegister::where('owner_id', auth()->id())->get();
-        $eventregisters = EventRegister::all();
+        $eventregisters = EventRegister::where('owner_id', auth()->id())->get();
+        //$eventregisters = EventRegister::all();
+        foreach ($eventregisters as $eventregister){
+        if($eventregister->status == 'New Registration Created'){
+            //$eventregister->status = 'hello';
+            $eventregister->status= "<span class='w3-pale-red w3-round-large w3-padding'>".$eventregister->status."</span>";
+         } else{
+            $eventregister->status="<span class='w3-margin-bottom w3-light-green w3-round-large w3-padding'>".$eventregister->status."</span>";
+         }}
+//return($eventregister->status);
+
+            
         return view('eventregister.index',['eventregisters'=>$eventregisters]);
     }
 
@@ -31,10 +41,11 @@ class EventRegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($event)
+    public function create($eventid)
     {   
-        return($event);
-        //return view('eventregister.create');
+        //return($event);
+        $event = Event::find($eventid);
+        return view('eventregister.create', ['event'=>$event]);
         //
     }
 
@@ -55,7 +66,7 @@ class EventRegisterController extends Controller
         $eventregister->status = 'New Registration Created';
         $eventregister->owner_id= Auth::user()->id;
         $eventregister->event_id= request()->event_id;
-    
+
 
         $eventregister->save();
         
@@ -70,18 +81,31 @@ class EventRegisterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(EventRegister $eventregister)
     {
-        //
+        
+        //$this->authorize('view', $eventregister);
+        auth()->user()->cannot('view', $eventregister); 
+        //abort_if(\Gate::denies('view', $eventregister ), 403);
+        //$eventregister = EventRegister::find($id);
+         $event = Event::find($eventregister->event_id);
 
-         $event = Event::find($id);
-         return view('/eventregister.create',['event'=>$event]);
+         if($eventregister->status == 'New Registration Created'){
+            //$eventregister->status = 'hello';
+            $eventregister->status= "<span class='w3-pale-red w3-round-large w3-padding'>".$eventregister->status."</span>";
+         } else{
+            $eventregister->status="<span id='register' class='w3-light-green w3-round-large w3-padding'>".$eventregister->status."</span>";
+         }
 
+        if(stristr($eventregister->status,"online")){
+            $online=true;
+            $showform=false;
+        } else {
+            $online=false;
+            $showform=true;
+        }
 
-        //$nextID = EventRegister::where('id', '>', $eventregister->id)->min('id');
-        //$previousID = EventRegister::where('id', '<', $eventregister->id)->max('id');
-
-        //return view('eventregisters.show', ['eventregister'=>$eventregister,'nextID'=>$nextID, 'previousID'=>$previousID]);
+        return view('eventregister.show', ['eventregister'=>$eventregister,'event'=>$event, 'online'=>$online, 'showform'=>$showform]);
     }
 
     /**
@@ -94,7 +118,7 @@ class EventRegisterController extends Controller
     {
       //
         $eventregister = EventRegister::find($id);
-        return view('eventregisters.edit',['eventregister'=>$eventregister]);
+        return view('eventregister.edit',['eventregister'=>$eventregister]);
 
     }
 
@@ -118,7 +142,7 @@ class EventRegisterController extends Controller
         
         $eventregister->save();
 
-        return redirect('/eventregisters');
+        return redirect('/eventregister');
     }
 
     /**
@@ -132,7 +156,36 @@ class EventRegisterController extends Controller
         //
         $eventregister = EventRegister::find($id)->delete();
 
-        return redirect('/eventregisters');
+        return redirect('/mprofile');
 
     }
+
+//This method updates the event registration status
+    public function confirm(Request $request, EventRegister $eventregister)
+    {   //($eventregister->id);
+       $eventregister->status = $request->status;
+       $eventregister->save();
+
+$event = Event::find($eventregister->event_id);
+
+if($eventregister->status == 'New Registration Created'){
+   //$eventregister->status = 'hello';
+   $eventregister->status= "<span class='w3-pale-red w3-round-large w3-padding'>".$eventregister->status."</span>";
+} elseif($eventregister->status == 'Cancelled'){
+   $eventregister->status="<span id='register' class='w3-grey w3-round-large w3-padding'>".$eventregister->status."</span>";
+} else {$eventregister->status="<span id='register' class='w3-light-green w3-round-large w3-padding'>".$eventregister->status."</span>";}
+
+if(stristr($eventregister->status,"online")){
+   $online=true;
+   $showform=false;
+} else {
+   $online=false;
+   $showform=true;
+}
+
+return view('eventregister.show', ['eventregister'=>$eventregister,'event'=>$event, 'online'=>$online, 'showform'=>$showform]);
+    }
+
+
+
 }

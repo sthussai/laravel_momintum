@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
+use App\EventRegister;
 
 class EventsController extends Controller
 {
@@ -51,10 +52,19 @@ class EventsController extends Controller
         //
         $event = new Event();
 
-        $event->name = request()->name;
         $event->owner_id= auth()->id();
+        $event->type = request()->type;
+        $event->name = request()->name;
         $event->description = request()->description;
         $event->url = request()->url;
+        $event->cost = request()->cost;
+        $start_date = request()->start_date;
+        $start_date = date('Y-m-d', strtotime(str_replace('-', '/', $start_date)));
+        $end_date = request()->end_date;
+        $end_date = date('Y-m-d', strtotime(str_replace('-', '/', $end_date)));
+
+        $event->start_date = $start_date;
+        $event->end_date = $end_date;
 
         $event->save();
         
@@ -71,12 +81,13 @@ class EventsController extends Controller
     {
         //
         $event = Event::find($id);
-        
+        $eventregisters = EventRegister::where('event_id',$id)->get();
+        //return ($eventregisters);        
         $nextID = Event::where('id', '>', $event->id)->min('id');
-        $previousID = Event::where('id', '<', $event->id)->max('id');
+       $previousID = Event::where('id', '<', $event->id)->max('id');
        //if($nextID)
-        //return $nextID;
-        return view('events.show', ['event'=>$event,'nextID'=>$nextID, 'previousID'=>$previousID]);
+
+       return view('events.show', ['event'=>$event,'eventregisters'=>$eventregisters,'nextID'=>$nextID, 'previousID'=>$previousID]);
 
     }
 
@@ -107,9 +118,18 @@ class EventsController extends Controller
         
         $event = Event::find($id);
 
-        $event->name = $request->name;
-        $event->description = $request->description;
-        $event->url = $request->url;
+        $event->name = request()->name;
+        $event->type = request()->type;
+        $event->description = request()->description;
+        $event->url = request()->url;
+        $event->cost = request()->cost;
+        $start_date = request()->start_date;
+        $start_date = date('Y-m-d', strtotime(str_replace('-', '/', $start_date)));
+        $end_date = request()->end_date;
+        $end_date = date('Y-m-d', strtotime(str_replace('-', '/', $end_date)));
+
+        $event->start_date = $start_date;
+        $event->end_date = $end_date;
         
         $event->save();
 

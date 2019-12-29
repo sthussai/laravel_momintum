@@ -13,9 +13,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-
-
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/wheelmenu.css') }}" rel="stylesheet">
 <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">
 
@@ -44,22 +41,10 @@ body{
   padding: 1em;
 }
 </style>
-</head> 
 
-<body class="w3-light-grey">
-    
-    <!-- Sidebar/menu -->
- 
-    
-   <!-- Overlay effect when opening sidebar on small screens -->
+</head>
+<body>
 
-
-<!-- Login/Register -->
-
-
-
-<!-- Navbar -->
-        
 <div class='w3-bar w3-theme-d2'>
     
         <div class="w3-content w3-left-align w3-large">
@@ -123,9 +108,21 @@ body{
     </div>
 
 
-    @yield('content')
+<!-- START Payment Nav Bar -->
+    <div class="w3-center    w3-panel w3-card">
+                <div class="links w3-center w3-large w3-bar w3-padding-large">
+                    <a class="w3-btn" href="/payment">Home</a>           
+                    <a class="w3-btn " href="/addpayer">Add Payment Information</a>
+                    <a class="w3-btn " href="/updatepayer">Update Payment Information</a>
 
-<!-- Footer -->
-<footer class="w3-container w3-theme-d3 w3-padding-16">
-  <h5>Footer</h5>
-</footer>
+
+                </div>
+    </div>            
+<!-- END Payment Nav Bar -->
+
+
+
+@yield('content')
+
+
+

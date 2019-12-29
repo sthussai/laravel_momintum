@@ -15,9 +15,15 @@
 <form action="/eventregister" method='POST' class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
 {{ csrf_field() }}
 
-<h2 class="w3-center"> Register For New Event</h2>
+
  
+
 <div class="w3-row w3-section">
+<div class='w3-container'><h2 class="w3-center w3-padding "> Register For Event: {{$event->name}}</h2>
+<p >Event Cost: {{$event->cost}}</p>
+<p class='w3-left'>Event Details: {{$event->description}}</p><br>
+
+</div>
   <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
     <div class="w3-rest">
       <input class="w3-input w3-border" required name="name" type="text" placeholder="Name" value="{{Auth::user()->name}}">

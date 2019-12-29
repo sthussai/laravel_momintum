@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Flight;
 use App\Event;
-use App\EventRegister;  
+use App\EventRegister;
+use App\ActivityReport;  
 class HomeController extends Controller
 {
     /**
@@ -42,23 +43,38 @@ class HomeController extends Controller
     }
 
     public function mprofile()
-    {    $events = Event::paginate(4);
-
+    {   $events = Event::paginate(4);
+        $user = Auth::user();
         $eventregisters = EventRegister::where('owner_id', auth()->id())->get();
-                
+        $activityreports = ActivityReport::where('owner_id', auth()->id())->get();
         
-        return view('momintum.mprofile', ['events'=> $events, 'eventregisters'=>$eventregisters]);
+        if ($user->subscribed('Momintum')) {
+            //
+            $message='Subscribed to momintum!';
+        } else{$message='No subscriptions';}
+
+        if ($user->hasCardOnFile()) {
+            //
+            $cardonfile='Yes';
+        }else{$cardonfile='No Card on file';}
+        
+        return view('momintum.mprofile', ['user'=>$user,'cardonfile'=>$cardonfile,'message'=>$message,'events'=> $events, 'eventregisters'=>$eventregisters, 'activityreports'=>$activityreports]);
         
         
         
     }
 
     public function test()
-    {   $sun = 
+    {    
         $tests = Flight::where('id','<', 14)->Paginate(5);
        return view('momintum.mtest', ['tests'=>$tests]);
-
+        //dd(auth()->user());
         //print_r $request;
+
+//        $user = User::find(1);
+
+//        $user->createAsStripeCustomer();
+
     }
 
 
