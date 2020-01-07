@@ -23,6 +23,6 @@ public function store(Request $request){
 
     $user->save();
 
-    return redirect('/mprofile'); 
+    return redirect('/mprofile')->with('status', 'Successfully Updated'); 
 }
 }
